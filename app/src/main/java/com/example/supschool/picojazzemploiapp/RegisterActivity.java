@@ -6,19 +6,20 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class ConnexionActivity extends AppCompatActivity {
-    private Button signUp;
+public class RegisterActivity extends AppCompatActivity {
+    private Button btnConnectR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_connexion);
+        setContentView(R.layout.activity_register);
 
-        signUp = (Button)findViewById(R.id.btnSignUp);
-        signUp.setOnClickListener(new View.OnClickListener() {
+        btnConnectR = (Button)findViewById(R.id.btnConnectR);
+
+        btnConnectR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ConnexionActivity.this,RegisterActivity.class);
+                Intent intent = new Intent(RegisterActivity.this,ConnexionActivity.class);
                 startActivity(intent);
             }
         });
