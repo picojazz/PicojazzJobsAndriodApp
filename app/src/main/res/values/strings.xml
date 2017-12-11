@@ -14,4 +14,10 @@
     <string name="des_milliers_d_opportinuit_s_au_bout_de_vos_doigts">Des milliers d\'opportinuités au bout de vos doigts</string>
     <string name="pas_de_compte">Pas de Compte ?</string>
     <string name="d_j_un_compte">Déjà un Compte !</string>
+    <string name="title_activity_home">HomeActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 </resources>

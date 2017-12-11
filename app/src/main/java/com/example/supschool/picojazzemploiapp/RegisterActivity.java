@@ -19,8 +19,7 @@ public class RegisterActivity extends AppCompatActivity {
         btnConnectR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RegisterActivity.this,ConnexionActivity.class);
-                startActivity(intent);
+                RegisterActivity.this.finish();
             }
         });
     }

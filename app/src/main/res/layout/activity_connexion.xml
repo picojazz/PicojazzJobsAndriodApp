@@ -159,7 +159,7 @@
                 android:background="@drawable/transparence"
                 android:text="@string/inscrivez_vous"
                 android:textAllCaps="false"
-                android:textColor="@android:color/holo_red_light"
+                android:textColor="#2b9"
 
                 android:textSize="14sp"
                 app:layout_constraintTop_toBottomOf="@+id/btnConnect"
