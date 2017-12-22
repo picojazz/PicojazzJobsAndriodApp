@@ -205,7 +205,23 @@ public class HomeActivity extends AppCompatActivity
             title.setText(listOffers.get(i).getTitle());
             place.setText(listOffers.get(i).getPlace());
             contract.setText(listOffers.get(i).getContract());
-            date.setText(listOffers.get(i).getDateCreate());
+
+            //date
+            String dateStr = listOffers.get(i).getDateCreate();
+            SimpleDateFormat  sdf = new SimpleDateFormat("yyyy-MM-dd ");
+            long numberOfDay=0;
+            try{
+                long CONST_DURATION_OF_DAY = 1000l * 60 * 60 * 24;
+                Date  datee = sdf.parse(dateStr);
+                Date today = new Date();
+                long diff = Math.abs(datee.getTime() - today.getTime());
+                 numberOfDay = (long)diff/CONST_DURATION_OF_DAY;
+            }catch (Exception e){
+                e.printStackTrace();
+               // date.setText(listOffers.get(i).getDateCreate());
+            }
+
+            date.setText("il y'a "+Long.toString(numberOfDay)+" jours");
 
             return view;
         }
