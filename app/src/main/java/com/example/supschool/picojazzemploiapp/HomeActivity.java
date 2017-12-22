@@ -94,15 +94,25 @@ public class HomeActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.home, menu);
         MenuItem item = menu.findItem(R.id.menu_search);
         searchView = (SearchView)item.getActionView();
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                OfferServer offerServer = new OfferServer();
+                offerServer.execute("http://192.168.56.1:8080/api/offers?p=");
+                return false;
+            }
+        });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(HomeActivity.this, query, Toast.LENGTH_SHORT).show();
+                OfferServer offerServer = new OfferServer();
+                offerServer.execute("http://192.168.56.1:8080/api/offers?p="+query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
+
                 return false;
             }
         });
@@ -177,7 +187,7 @@ public class HomeActivity extends AppCompatActivity
 
                // JSONObject jsonObject = new JSONObject(s);
                 JSONArray jsonArray = new JSONArray(s);
-
+                listOffers.clear();
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject element = jsonArray.getJSONObject(i);
                     /*String dateStr = element.getString("dateCreate");
