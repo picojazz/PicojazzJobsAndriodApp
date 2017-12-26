@@ -35,8 +35,10 @@ public class Offer {
         this.dateCreate = dateCreate;
     }
 
-    public Offer(String title, String place, String contract, String dateCreate) {
+
+    public Offer(long id,String title, String place, String contract, String dateCreate) {
         this.title = title;
+        this.id = id;
         this.place = place;
         this.contract = contract;
         this.dateCreate = dateCreate;

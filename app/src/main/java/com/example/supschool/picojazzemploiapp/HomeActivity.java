@@ -1,6 +1,7 @@
 package com.example.supschool.picojazzemploiapp;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -16,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -55,17 +57,26 @@ public class HomeActivity extends AppCompatActivity
         dialog = new ProgressDialog(this);
         dialog.setMessage(getString(R.string.waiting));
 
-        //searchview
-         //searchView = (MaterialSearchView)findViewById(R.id.search_view);
+
+        homeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(HomeActivity.this,OfferActivity.class);
+                intent.putExtra("offer_id",String.valueOf(listOffers.get(position).getId()));
+
+               // Toast.makeText(HomeActivity.this,String.valueOf(listOffers.get(position).getId()) , Toast.LENGTH_SHORT).show();
+
+                startActivity(intent);
+            }
+        });
+
 
 
         //api offers
         OfferServer offerServer = new OfferServer();
         offerServer.execute("http://192.168.56.1:8080/api/offers");
 
-        //adapter
-        /*CustomAdaptder customAdaptder = new CustomAdaptder();
-        homeListView.setAdapter(customAdaptder);*/
+
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -193,7 +204,7 @@ public class HomeActivity extends AppCompatActivity
                     /*String dateStr = element.getString("dateCreate");
                     SimpleDateFormat  sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     Date  date = sdf.parse(dateStr);*/
-                    Offer offer = new Offer(element.getString("title"),element.getString("place"),element.getString("contract"),element.getString("dateCreate"));
+                    Offer offer = new Offer(element.getLong("id"),element.getString("title"),element.getString("place"),element.getString("contract"),element.getString("dateCreate"));
                     listOffers.add(offer);
                 }
 
