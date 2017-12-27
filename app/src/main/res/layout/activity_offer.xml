@@ -16,9 +16,10 @@
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:background="@color/colorPrimary"
-        tools:layout_editor_absoluteY="25dp"
+
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_editor_absoluteY="25dp" />
         <android.support.v7.widget.CardView
             android:id="@+id/offer_view"
             android:layout_width="0dp"
