@@ -1,5 +1,6 @@
 package com.example.supschool.picojazzemploiapp;
 
+import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -106,6 +107,13 @@ public class OfferActivity extends AppCompatActivity {
                 location.setText(json.getString("place"));
                 about.setText(json.getString("about"));
 
+//                Bundle bundle = new Bundle();
+//                bundle.putDouble("lat",14.71118);
+//                bundle.putDouble("lng",-17.5358662);
+//                MapsFragment f = new MapsFragment();
+//
+//                f.setArguments(bundle);
+
 
             }catch(Exception e){
                 e.printStackTrace();
@@ -113,4 +121,6 @@ public class OfferActivity extends AppCompatActivity {
 
         }
     }
+
+
 }
