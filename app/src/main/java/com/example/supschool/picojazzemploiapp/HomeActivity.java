@@ -204,7 +204,7 @@ public class HomeActivity extends AppCompatActivity
                     /*String dateStr = element.getString("dateCreate");
                     SimpleDateFormat  sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     Date  date = sdf.parse(dateStr);*/
-                    Offer offer = new Offer(element.getLong("id"),element.getString("title"),element.getString("place"),element.getString("contract"),element.getString("dateCreate"));
+                    Offer offer = new Offer(element.getLong("id"),element.getString("title"),element.getString("place"),element.getString("contract"),element.getString("dateCreate"),element.getString("company"));
                     listOffers.add(offer);
                 }
 
@@ -245,10 +245,12 @@ public class HomeActivity extends AppCompatActivity
             TextView place = (TextView)view.findViewById(R.id.offerPlace);
             TextView contract = (TextView)view.findViewById(R.id.offerContract);
             TextView date = (TextView)view.findViewById(R.id.offerDate);
+            TextView company = (TextView)view.findViewById(R.id.companyName);
 
             title.setText(listOffers.get(i).getTitle());
             place.setText(listOffers.get(i).getPlace());
             contract.setText(listOffers.get(i).getContract());
+            company.setText(listOffers.get(i).getCompany());
 
             //date
             String dateStr = listOffers.get(i).getDateCreate();

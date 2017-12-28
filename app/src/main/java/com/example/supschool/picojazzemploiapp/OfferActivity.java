@@ -106,13 +106,16 @@ public class OfferActivity extends AppCompatActivity {
                 salary.setText(json.getString("salary")+" / year");
                 location.setText(json.getString("place"));
                 about.setText(json.getString("about"));
+                company.setText(json.getString("company"));
 
-//                Bundle bundle = new Bundle();
-//                bundle.putDouble("lat",14.71118);
-//                bundle.putDouble("lng",-17.5358662);
-//                MapsFragment f = new MapsFragment();
-//
-//                f.setArguments(bundle);
+                Bundle bundle = new Bundle();
+                bundle.putDouble("lat",json.getDouble("lat"));
+                bundle.putDouble("lng",json.getDouble(("lon")));
+                bundle.putString("company",json.getString("company"));
+                MapsFragment f = new MapsFragment();
+
+                f.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction().replace(R.id.container,f).commit();
 
 
             }catch(Exception e){

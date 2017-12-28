@@ -9,11 +9,11 @@ public class Offer {
 
     private Long id;
     private String title;
-
+    private String company;
     private String about;
     private String place;
-    private int lon;
-    private int lat;
+    private double lon;
+    private double lat;
     private String contract;
     private int Salary;
     private String dateCreate;
@@ -25,7 +25,7 @@ public class Offer {
     public Offer() {
     }
 
-    public Offer(String about, String place, int lon, int lat, String contract, int salary, String dateCreate) {
+    public Offer(String about, String place, double lon, double lat, String contract, int salary, String dateCreate,String company) {
         this.about = about;
         this.place = place;
         this.lon = lon;
@@ -33,15 +33,17 @@ public class Offer {
         this.contract = contract;
         Salary = salary;
         this.dateCreate = dateCreate;
+        this.company = company;
     }
 
 
-    public Offer(long id,String title, String place, String contract, String dateCreate) {
+    public Offer(long id,String title, String place, String contract, String dateCreate, String company) {
         this.title = title;
         this.id = id;
         this.place = place;
         this.contract = contract;
         this.dateCreate = dateCreate;
+        this.company = company;
     }
 
     public Long getId() {
@@ -100,7 +102,7 @@ public class Offer {
         this.dateCreate = dateCreate;
     }
 
-    public int getLon() {
+    public double getLon() {
         return lon;
     }
 
@@ -108,7 +110,7 @@ public class Offer {
         this.lon = lon;
     }
 
-    public int getLat() {
+    public double getLat() {
         return lat;
     }
 
@@ -116,6 +118,13 @@ public class Offer {
         this.lat = lat;
     }
 
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
     /*public List<Tags> getTags() {
         return tags;
     }
@@ -124,18 +133,5 @@ public class Offer {
         this.tags = tags;
     }*/
 
-    @Override
-    public String toString() {
-        return "Offer{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", about='" + about + '\'' +
-                ", place='" + place + '\'' +
-                ", lon=" + lon +
-                ", lat=" + lat +
-                ", contract='" + contract + '\'' +
-                ", Salary=" + Salary +
-                ", dateCreate=" + dateCreate +
-                '}';
-    }
+
 }

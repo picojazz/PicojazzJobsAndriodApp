@@ -23,6 +23,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback{
     MapView mMapView;
     View mView;
     Double lat,lng;
+    String company;
 
     public MapsFragment(){
 
@@ -41,8 +42,9 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
          mView = inflater.inflate(R.layout.fragment_maps, container, false);
-//        lat = getArguments().getDouble("lat");
-//        lng = getArguments().getDouble("lng");
+        lat = this.getArguments().getDouble("lat");
+        lng = this.getArguments().getDouble("lng");
+        company = this.getArguments().getString("company");
 
         return mView;
     }
@@ -63,13 +65,13 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback{
         MapsInitializer.initialize(getContext());
         mGoogleMap = googleMap;
 
-        LatLng test = new LatLng(14.6702929, -17.4297956);
+        LatLng test = new LatLng(lat, lng);
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(test,16));
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(test));
 
-        googleMap.addMarker(new MarkerOptions().position(test).title("dakar"));
+        googleMap.addMarker(new MarkerOptions().position(test).title(company));
 
 
 
