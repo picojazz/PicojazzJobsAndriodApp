@@ -44,6 +44,7 @@ public class HomeActivity extends AppCompatActivity
     private List<Offer> listOffers;
     private ProgressDialog dialog;
     private SearchView searchView;
+    String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +58,7 @@ public class HomeActivity extends AppCompatActivity
         dialog = new ProgressDialog(this);
         dialog.setMessage(getString(R.string.waiting));
 
-
+        id = getIntent().getStringExtra("id");
         homeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -75,6 +76,9 @@ public class HomeActivity extends AppCompatActivity
         //api offers
         OfferServer offerServer = new OfferServer();
         offerServer.execute("http://192.168.56.1:8080/api/offers");
+
+        InfoServer info = new InfoServer();
+        info.execute("http://192.168.56.1:8080/api/users/"+id);
 
 
 
@@ -270,6 +274,37 @@ public class HomeActivity extends AppCompatActivity
             date.setText("il y'a "+Long.toString(numberOfDay)+" jours");
 
             return view;
+        }
+    }
+
+    protected class InfoServer extends AsyncTask<String,Void,String>{
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                HttpClient client = new DefaultHttpClient();
+                HttpGet get = new HttpGet(params[0]);
+                ResponseHandler<String> buffer = new BasicResponseHandler();
+                String result = client.execute(get, buffer);
+                return result;
+
+            }catch (Exception e){
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            try{
+                JSONObject json = new JSONObject(s);
+                TextView username = (TextView)findViewById(R.id.username);
+                TextView email = (TextView)findViewById(R.id.email);
+                username.setText(json.getString("username"));
+                email.setText(json.getString("email"));
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
         }
     }
 }

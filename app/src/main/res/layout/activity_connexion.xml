@@ -91,7 +91,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-            <AutoCompleteTextView
+            <EditText
                 android:id="@+id/txtUsername"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -109,7 +109,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-            <AutoCompleteTextView
+            <EditText
                 android:id="@+id/txtPassword"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
