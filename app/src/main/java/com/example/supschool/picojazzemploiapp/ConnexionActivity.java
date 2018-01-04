@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -92,6 +93,7 @@ public class ConnexionActivity extends AppCompatActivity {
                 } else {
                     Intent intent = new Intent(ConnexionActivity.this, HomeActivity.class);
                     intent.putExtra("id", json.getString("id"));
+                    Log.i("debug","DEBUGME => id user = "+json.getString("id"));
                     startActivity(intent);
                 }
             }catch (Exception e){

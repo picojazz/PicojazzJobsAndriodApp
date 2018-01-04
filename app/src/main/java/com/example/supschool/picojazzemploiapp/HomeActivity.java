@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -44,7 +45,7 @@ public class HomeActivity extends AppCompatActivity
     private List<Offer> listOffers;
     private ProgressDialog dialog;
     private SearchView searchView;
-    String id;
+    String user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,13 +59,14 @@ public class HomeActivity extends AppCompatActivity
         dialog = new ProgressDialog(this);
         dialog.setMessage(getString(R.string.waiting));
 
-        id = getIntent().getStringExtra("id");
+        user_id = getIntent().getStringExtra("id");
+        Log.i("debug","DEBUGME => id user = "+user_id );
         homeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(HomeActivity.this,OfferActivity.class);
                 intent.putExtra("offer_id",String.valueOf(listOffers.get(position).getId()));
-
+                intent.putExtra("user_id",user_id);
                // Toast.makeText(HomeActivity.this,String.valueOf(listOffers.get(position).getId()) , Toast.LENGTH_SHORT).show();
 
                 startActivity(intent);
@@ -78,7 +80,7 @@ public class HomeActivity extends AppCompatActivity
         offerServer.execute("http://192.168.56.1:8080/api/offers");
 
         InfoServer info = new InfoServer();
-        info.execute("http://192.168.56.1:8080/api/users/"+id);
+        info.execute("http://192.168.56.1:8080/api/users/"+user_id);
 
 
 

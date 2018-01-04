@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -21,10 +22,13 @@ import org.json.JSONObject;
 
 
 public class OfferActivity extends AppCompatActivity {
-    private String offer_id;
+    private String offer_id,id;
     private Offer offer;
     private ProgressDialog dialog;
     private TextView title,company,contract,salary,location,about;
+    MenuItem item;
+    int test_fav;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,14 +38,15 @@ public class OfferActivity extends AppCompatActivity {
         Toolbar toolbar =(Toolbar) findViewById(R.id.toolbar_offer);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("details de l'offre");
-        //toolbar.setTitleTextColor(Color.parseColor("#000"));
+        toolbar.setTitleTextColor(Color.parseColor("#ecf0f1"));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
 
         dialog = new ProgressDialog(this);
         dialog.setMessage(getString(R.string.waiting));
-
-         offer_id = getIntent().getStringExtra("offer_id");
+        id = getIntent().getStringExtra("user_id");
+        offer_id = getIntent().getStringExtra("offer_id");
 
         DetailsOffer detailsOffer = new DetailsOffer();
         detailsOffer.execute("http://192.168.56.1:8080/api/offers/"+offer_id);
@@ -53,11 +58,34 @@ public class OfferActivity extends AppCompatActivity {
         location = (TextView)findViewById(R.id.offer_location);
         about = (TextView)findViewById(R.id.offer_about);
 
+        Log.i("debug","DEBUGME => id user = "+id+" et offer id = "+offer_id);
+
+
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         getMenuInflater().inflate(R.menu.offer_action_bar, menu);
+        item = menu.findItem(R.id.fav);
+        VerifServer verifServer = new VerifServer();
+        verifServer.execute("http://192.168.56.1:8080/api/verif-fav?idU="+id+"&idO="+offer_id);
+
+        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if(test_fav == 0) {
+                    AddFavServer addFavServer = new AddFavServer();
+                    addFavServer.execute("http://192.168.56.1:8080/api/add-fav?idU=" + id + "&idO=" + offer_id);
+                }
+                if(test_fav == 1) {
+                    DeleteFavServer deleteFavServer = new DeleteFavServer();
+                    deleteFavServer.execute("http://192.168.56.1:8080/api/delete-fav?idU=" + id + "&idO=" + offer_id);
+                }
+                return true;
+            }
+        });
 
         return true;
     }
@@ -125,5 +153,87 @@ public class OfferActivity extends AppCompatActivity {
         }
     }
 
+    protected class VerifServer extends AsyncTask<String,Void,String>{
+        @Override
+        protected String doInBackground(String... params) {
 
+            try{
+                HttpClient client = new DefaultHttpClient();
+                HttpGet get = new HttpGet(params[0]);
+                ResponseHandler<String> buffer = new BasicResponseHandler();
+                String result = client.execute(get,buffer);
+                return result;
+            }catch(Exception e){
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if(s == null)
+                item.setIcon(R.drawable.ic_star_border_black_24dp);
+
+            try{
+                JSONObject json = new JSONObject(s);
+                if(json.getString("status").equals("ko")) {
+                    item.setIcon(R.drawable.ic_star_border_black_24dp);
+                    test_fav = 0 ;
+                }
+
+                if(json.getString("status").equals("ok")) {
+                    item.setIcon(R.drawable.ic_star_white_24dp);
+                    test_fav = 1 ;
+                }
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    protected class AddFavServer extends AsyncTask<String,Void,String>{
+        @Override
+        protected String doInBackground(String... params) {
+            try{
+                HttpClient client = new DefaultHttpClient();
+                HttpGet get = new HttpGet(params[0]);
+                ResponseHandler<String> buffer = new BasicResponseHandler();
+                String result = client.execute(get,buffer);
+                return result;
+            }catch(Exception e){
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            Toast.makeText(OfferActivity.this, "cet offre a ete ajoutee a vos favoris", Toast.LENGTH_SHORT).show();
+            VerifServer verifServer = new VerifServer();
+            verifServer.execute("http://192.168.56.1:8080/api/verif-fav?idU="+id+"&idO="+offer_id);
+        }
+    }
+    protected class DeleteFavServer extends AsyncTask<String,Void,String>{
+        @Override
+        protected String doInBackground(String... params) {
+            try{
+                HttpClient client = new DefaultHttpClient();
+                HttpGet get = new HttpGet(params[0]);
+                ResponseHandler<String> buffer = new BasicResponseHandler();
+                String result = client.execute(get,buffer);
+                return result;
+            }catch(Exception e){
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            Toast.makeText(OfferActivity.this, "cet offre a ete retiree de vos favoris", Toast.LENGTH_SHORT).show();
+            VerifServer verifServer = new VerifServer();
+            verifServer.execute("http://192.168.56.1:8080/api/verif-fav?idU="+id+"&idO="+offer_id);
+        }
+    }
 }

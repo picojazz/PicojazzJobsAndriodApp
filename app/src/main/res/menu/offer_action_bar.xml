@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/fav"
+    <item  android:id="@+id/fav"
         android:icon="@drawable/ic_star_border_black_24dp"
         app:showAsAction="always"/>
 
