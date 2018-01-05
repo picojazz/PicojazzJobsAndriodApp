@@ -161,6 +161,9 @@ public class HomeActivity extends AppCompatActivity
         if (id == R.id.nav_moncv) {
 
         } else if (id == R.id.nav_favoris) {
+            Intent intent = new Intent(HomeActivity.this,FavorisActivity.class);
+            intent.putExtra("user_id",user_id);
+            startActivity(intent);
 
         }
 
