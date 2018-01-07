@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
@@ -46,6 +47,7 @@ public class HomeActivity extends AppCompatActivity
     private ProgressDialog dialog;
     private SearchView searchView;
     String user_id;
+    SwipeRefreshLayout swipeHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,15 @@ public class HomeActivity extends AppCompatActivity
         listOffers = new ArrayList<>();
         dialog = new ProgressDialog(this);
         dialog.setMessage(getString(R.string.waiting));
+        swipeHome = (SwipeRefreshLayout)findViewById(R.id.swipeHome);
+        swipeHome.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                OfferServer offerServer = new OfferServer();
+                offerServer.execute("http://192.168.56.1:8080/api/offers");
+                swipeHome.setRefreshing(false);
+            }
+        });
 
         user_id = getIntent().getStringExtra("id");
         Log.i("debug","DEBUGME => id user = "+user_id );

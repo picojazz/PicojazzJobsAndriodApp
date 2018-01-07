@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -33,6 +34,7 @@ public class FavorisActivity extends AppCompatActivity {
     List<Offer> listOffers;
     String user_id;
     ProgressDialog dialog;
+    SwipeRefreshLayout swipeFav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,7 @@ public class FavorisActivity extends AppCompatActivity {
 
         dialog = new ProgressDialog(this);
         dialog.setMessage(getString(R.string.waiting));
+        swipeFav = (SwipeRefreshLayout)findViewById(R.id.swipeFav);
 
         user_id = getIntent().getStringExtra("user_id");
         FavServer favServer = new FavServer();
@@ -62,6 +65,15 @@ public class FavorisActivity extends AppCompatActivity {
                 intent.putExtra("offer_id",String.valueOf(listOffers.get(position).getId()));
                 intent.putExtra("user_id",user_id);
                 startActivity(intent);
+            }
+        });
+
+        swipeFav.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                FavServer favServer = new FavServer();
+                favServer.execute("http://192.168.56.1:8080/api/users/"+user_id);
+                swipeFav.setRefreshing(false);
             }
         });
 

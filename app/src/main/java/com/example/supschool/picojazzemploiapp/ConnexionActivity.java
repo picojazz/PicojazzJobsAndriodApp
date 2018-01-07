@@ -53,6 +53,7 @@ public class ConnexionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ConnexionActivity.this,HomeActivity.class);
+                intent.putExtra("id", "3");
                 startActivity(intent);
             }
         });
