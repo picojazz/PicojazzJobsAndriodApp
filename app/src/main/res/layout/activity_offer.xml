@@ -16,7 +16,7 @@
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:background="#2c3e50"
-
+        app:theme="@style/ToolbarColoredBackArrow"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         tools:layout_editor_absoluteY="150dp" />

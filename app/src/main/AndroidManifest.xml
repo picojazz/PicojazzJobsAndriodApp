@@ -36,7 +36,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCRPr3hhm5o8XDxHHPWDpkhdkqO1ix63jM" />
 
-        <activity android:name=".FavorisActivity"></activity>
+        <activity android:name=".FavorisActivity" />
+        <activity android:name=".MoncvActivity"></activity>
     </application>
 
 </manifest>

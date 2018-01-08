@@ -170,6 +170,9 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_moncv) {
+            Intent intent = new Intent(HomeActivity.this,MoncvActivity.class);
+            intent.putExtra("user_cv",user_id);
+            startActivity(intent);
 
         } else if (id == R.id.nav_favoris) {
             Intent intent = new Intent(HomeActivity.this,FavorisActivity.class);
@@ -188,7 +191,7 @@ public class HomeActivity extends AppCompatActivity
 
         @Override
         protected void onPreExecute() {
-            dialog.show();
+            //dialog.show();
         }
 
         @Override
@@ -208,7 +211,7 @@ public class HomeActivity extends AppCompatActivity
 
         @Override
         protected void onPostExecute(String s) {
-            dialog.dismiss();
+            //dialog.dismiss();
             if (s == null) {
                 Toast.makeText(HomeActivity.this, "erreur de connexion", Toast.LENGTH_SHORT).show();
                 return;

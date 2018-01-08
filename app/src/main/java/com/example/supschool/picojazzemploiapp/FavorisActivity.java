@@ -88,7 +88,7 @@ public class FavorisActivity extends AppCompatActivity {
     protected class FavServer extends AsyncTask<String,Void,String>{
         @Override
         protected void onPreExecute() {
-            dialog.show();
+            //dialog.show();
         }
 
         @Override
@@ -108,7 +108,7 @@ public class FavorisActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s) {
-            dialog.dismiss();
+            //dialog.dismiss();
 
             if(s == null){
                 Toast.makeText(FavorisActivity.this, "erreur de connexion", Toast.LENGTH_SHORT).show();

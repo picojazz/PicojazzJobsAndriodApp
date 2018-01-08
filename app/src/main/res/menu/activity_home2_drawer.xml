@@ -8,7 +8,7 @@
             android:title="Mon cv" />
         <item
             android:id="@+id/nav_favoris"
-            android:icon="@drawable/favoris"
+            android:icon="@drawable/ic_star_white_24dp"
             android:title="Mes favoris" />
 
     </group>

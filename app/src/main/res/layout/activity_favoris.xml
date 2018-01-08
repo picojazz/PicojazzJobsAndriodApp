@@ -10,7 +10,7 @@
         android:id="@+id/toolbar_fav"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-
+        app:theme="@style/ToolbarColoredBackArrow"
         android:background="#2c3e50"
          />
 
