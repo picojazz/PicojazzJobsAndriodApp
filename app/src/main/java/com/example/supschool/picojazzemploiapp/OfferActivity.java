@@ -10,6 +10,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +31,7 @@ public class OfferActivity extends AppCompatActivity {
     private TextView title,company,contract,salary,location,about;
     MenuItem item;
     int test_fav;
+    FrameLayout container;
 
 
     @Override
@@ -40,6 +44,15 @@ public class OfferActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("details de l'offre");
         toolbar.setTitleTextColor(Color.parseColor("#ecf0f1"));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        container = (FrameLayout)findViewById(R.id.container);
+        container.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
 
 
 

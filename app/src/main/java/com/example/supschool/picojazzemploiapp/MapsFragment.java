@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -45,7 +46,13 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback{
         lat = this.getArguments().getDouble("lat");
         lng = this.getArguments().getDouble("lng");
         company = this.getArguments().getString("company");
-
+        mView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
         return mView;
     }
 
@@ -58,12 +65,21 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback{
             mMapView.onResume();
             mMapView.getMapAsync(this);
         }
+        mMapView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
+
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         MapsInitializer.initialize(getContext());
         mGoogleMap = googleMap;
+
 
         LatLng test = new LatLng(lat, lng);
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);

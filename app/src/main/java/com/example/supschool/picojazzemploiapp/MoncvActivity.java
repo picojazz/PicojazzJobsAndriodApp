@@ -2,6 +2,7 @@ package com.example.supschool.picojazzemploiapp;
 
 import android.app.ActionBar;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,6 +94,18 @@ public class MoncvActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if(id == R.id.menuModifcv){
+            Intent intent = new Intent(MoncvActivity.this,ModifcvActivity.class);
+            intent.putExtra("user_cv",user_cv);
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public boolean onSupportNavigateUp() {
