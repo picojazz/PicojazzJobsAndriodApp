@@ -2,6 +2,7 @@ package com.example.supschool.picojazzemploiapp;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -69,6 +70,10 @@ public class HomeActivity extends AppCompatActivity
                 swipeHome.setRefreshing(false);
             }
         });
+
+
+        getSupportActionBar().setTitle("Acceuil");
+        toolbar.setTitleTextColor(Color.parseColor("#ecf0f1"));
 
         user_id = getIntent().getStringExtra("id");
         Log.i("debug","DEBUGME => id user = "+user_id );

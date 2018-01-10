@@ -2,6 +2,7 @@ package com.example.supschool.picojazzemploiapp;
 
 import android.app.ActionBar;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -42,6 +43,7 @@ public class MoncvActivity extends AppCompatActivity {
     List<Formations> listFormations;
     List<Experiences> listExperiences;
     TextView name,email,adress,tel,age;
+    LinearLayout linearLayoutExp,linearLayoutFormation;
 
 
 
@@ -73,24 +75,17 @@ public class MoncvActivity extends AppCompatActivity {
         tel =(TextView)findViewById(R.id.cvTel);
         age =(TextView)findViewById(R.id.cvAge);
 
+        linearLayoutExp = (LinearLayout)findViewById(R.id.linearCvExp);
+
+        linearLayoutFormation = (LinearLayout)findViewById(R.id.linearCvFormation);
 
 
-
-
-        expListview = (ListView)findViewById(R.id.expListview);
-        formationListview =(ListView)findViewById(R.id.formationListview);
 
         MoncvServer moncvServer = new MoncvServer();
         moncvServer.execute("http://192.168.56.1:8080/api/cv/"+user_cv);
 
 
-        expListview.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                v.getParent().requestDisallowInterceptTouchEvent(true);
-                return false;
-            }
-        });
+
 
     }
 
@@ -151,11 +146,22 @@ public class MoncvActivity extends AppCompatActivity {
                 Log.i("debug", "enter in async");
                 JSONObject jsonObject = new JSONObject(s);
                 Log.i("debug", jsonObject.getString("firstName") + " " + jsonObject.getString("tel") + " " + jsonObject.getString("adress") + " " + jsonObject.getInt("age"));
-                name.setText(jsonObject.getString("firstName") + " " + jsonObject.getString("lastName"));
-                email.setText(jsonObject.getString("email"));
-                age.setText(String.valueOf(jsonObject.getInt("age")) + " ans");
-                tel.setText(jsonObject.getString("tel"));
-                adress.setText(jsonObject.getString("adress"));
+
+                if(jsonObject.getString("firstName") != "null" && jsonObject.getString("lastName") != "null" ) {
+                    name.setText(jsonObject.getString("firstName") + " " + jsonObject.getString("lastName"));
+                }
+                if(jsonObject.getString("email") != "null") {
+                    email.setText(jsonObject.getString("email"));
+                }
+                if (jsonObject.getInt("age") != 0) {
+                    age.setText(String.valueOf(jsonObject.getInt("age")) + " ans");
+                }
+                if(!jsonObject.getString("tel").equals("0")) {
+                    tel.setText(jsonObject.getString("tel"));
+                }
+                if (jsonObject.getString("adress") !="null") {
+                    adress.setText(jsonObject.getString("adress"));
+                }
                 // Log.i("debug",jsonObject.getString("firstName")+" "+jsonObject.getString("tel")+" "+jsonObject.getString("adress")+" "+jsonObject.getInt("age"));
 
                 JSONArray jsonFormation = jsonObject.getJSONArray("formations");
@@ -167,23 +173,50 @@ public class MoncvActivity extends AppCompatActivity {
                 for (int i = 0; i < jsonExperience.length(); i++) {
                     JSONObject element = jsonExperience.getJSONObject(i);
 
-                    Experiences exp = new Experiences(element.getString("begin"), element.getString("end"),
-                            element.getString("position"), element.getString("company"), element.getString("about"));
-                    listExperiences.add(exp);
+
+
+                    LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    View view = inflater.inflate(R.layout.row_experience2, null);
+
+                    TextView dateDebut = (TextView)view.findViewById(R.id.dateDebut);
+                    TextView dateFin = (TextView)view.findViewById(R.id.dateFin);
+                    TextView expPosition = (TextView)view.findViewById(R.id.expPosition);
+                    TextView expCompany = (TextView)view.findViewById(R.id.expCompany);
+                    TextView expAbout = (TextView)view.findViewById(R.id.expAbout);
+
+                    dateDebut.setText(element.getString("begin"));
+                    dateFin.setText(element.getString("end"));
+                    expPosition.setText(element.getString("position"));
+                    expCompany.setText(element.getString("company"));
+                    expAbout.setText(element.getString("about"));
+
+                    linearLayoutExp.addView(view,linearLayoutExp.getChildCount());
+
                 }
                 for (int i = 0; i < jsonFormation.length(); i++) {
                     JSONObject element = jsonFormation.getJSONObject(i);
 
-                    Formations formation = new Formations(element.getString("date"),
-                            element.getString("name"), element.getString("school"));
-                    listFormations.add(formation);
+
+
+
+                    LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    View view = inflater.inflate(R.layout.row_formation2, null);
+
+                    TextView date = (TextView)view.findViewById(R.id.dateFormation);
+                    TextView name = (TextView)view.findViewById(R.id.nameFormation);
+                    TextView school = (TextView)view.findViewById(R.id.schoolformation);
+
+                    date.setText(element.getString("date"));
+                    name.setText(element.getString("name"));
+                    school.setText(element.getString("school"));
+
+                    linearLayoutFormation.addView(view,linearLayoutFormation.getChildCount());
+
                 }
 
 
-                CustomAdapterExperience customAdapterExperience = new CustomAdapterExperience();
-                expListview.setAdapter(customAdapterExperience);
-                CustomAdapterFormation customAdapterFormation = new CustomAdapterFormation();
-                formationListview.setAdapter(customAdapterFormation);
+
+
 
 
             } catch (Exception e) {
@@ -192,83 +225,8 @@ public class MoncvActivity extends AppCompatActivity {
         }
     }
 
-        class CustomAdapterExperience extends BaseAdapter{
-
-            @Override
-            public int getCount() {
-                return listExperiences.size();
-            }
-
-            @Override
-            public Object getItem(int position) {
-                return null;
-            }
-
-            @Override
-            public long getItemId(int position) {
-                return 0;
-            }
-
-            @Override
-            public View getView(int i, View view, ViewGroup parent) {
-                view = getLayoutInflater().inflate(R.layout.row_experience, null);
 
 
 
-                TextView dateDebut = (TextView)view.findViewById(R.id.dateDebut);
-                TextView dateFin = (TextView)view.findViewById(R.id.dateFin);
-                TextView expPosition = (TextView)view.findViewById(R.id.expPosition);
-                TextView expCompany = (TextView)view.findViewById(R.id.expCompany);
-                TextView expAbout = (TextView)view.findViewById(R.id.expAbout);
-
-                dateDebut.setText(listExperiences.get(i).getBegin());
-                dateFin.setText(listExperiences.get(i).getEnd());
-                expPosition.setText(listExperiences.get(i).getPosition());
-                expCompany.setText(listExperiences.get(i).getCompany());
-                expAbout.setText(listExperiences.get(i).getAbout());
-
-
-
-                return view;
-            }
-        }
-
-    class CustomAdapterFormation extends BaseAdapter{
-
-        @Override
-        public int getCount() {
-            return listFormations.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup parent) {
-            view = getLayoutInflater().inflate(R.layout.row_formation, null);
-
-
-
-            TextView date = (TextView)view.findViewById(R.id.dateFormation);
-            TextView name = (TextView)view.findViewById(R.id.nameFormation);
-            TextView school = (TextView)view.findViewById(R.id.schoolformation);
-
-            date.setText(listFormations.get(i).getDate());
-            name.setText(listFormations.get(i).getName());
-            school.setText(listFormations.get(i).getSchool());
-
-
-
-
-            return view;
-        }
-    }
 
 }

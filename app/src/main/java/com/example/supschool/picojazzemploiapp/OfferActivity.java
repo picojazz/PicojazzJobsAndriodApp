@@ -32,6 +32,7 @@ public class OfferActivity extends AppCompatActivity {
     MenuItem item;
     int test_fav;
     FrameLayout container;
+    private View.OnTouchListener mListener;
 
 
     @Override
@@ -108,6 +109,7 @@ public class OfferActivity extends AppCompatActivity {
         finish();
         return true;
     }
+
 
     protected class DetailsOffer extends AsyncTask<String, Void, String>{
         @Override
@@ -249,4 +251,11 @@ public class OfferActivity extends AppCompatActivity {
             verifServer.execute("http://192.168.56.1:8080/api/verif-fav?idU="+id+"&idO="+offer_id);
         }
     }
+
+
+
+
+
+
+
 }

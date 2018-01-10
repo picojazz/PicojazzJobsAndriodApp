@@ -94,9 +94,10 @@
        <android.support.v7.widget.CardView
             android:id="@+id/cardViewExp"
             android:layout_width="0dp"
-            android:layout_height="300dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:paddingBottom="25dp"
+           app:cardUseCompatPadding="true"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -114,14 +115,16 @@
                 android:textStyle="bold"
                 android:layout_marginTop="15dp"
                  />
+           <LinearLayout
+               android:id="@+id/linearCvExp"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="vertical"
+               android:layout_marginTop="55dp">
 
-               <ListView
-                    android:id="@+id/expListview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="50dp"
-                   android:divider="@null"
-                     />
+           </LinearLayout>
+
+
 
 
 
@@ -129,12 +132,15 @@
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
+            android:id="@+id/cardViewFormation"
             android:layout_width="0dp"
-            android:layout_height="300dp"
+            android:layout_height="wrap_content"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             android:layout_marginTop="54dp"
+            android:paddingBottom="25dp"
+            app:cardUseCompatPadding="true"
             app:layout_constraintTop_toBottomOf="@+id/cardViewExp"
             >
 
@@ -148,13 +154,14 @@
                 android:textColor="#34495e"
                 android:textSize="24sp"
                 android:textStyle="bold" />
-            <ListView
-                android:id="@+id/formationListview"
+            <LinearLayout
+                android:id="@+id/linearCvFormation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:divider="@null"
-                />
+                android:orientation="vertical"
+                android:layout_marginTop="55dp">
+
+            </LinearLayout>
 
         </android.support.v7.widget.CardView>
 
