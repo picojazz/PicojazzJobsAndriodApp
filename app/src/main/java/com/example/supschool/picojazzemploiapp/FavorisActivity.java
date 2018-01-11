@@ -34,7 +34,7 @@ public class FavorisActivity extends AppCompatActivity {
     List<Offer> listOffers;
     String user_id;
     ProgressDialog dialog;
-    SwipeRefreshLayout swipeFav;
+    TextView textFav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,10 @@ public class FavorisActivity extends AppCompatActivity {
 
         dialog = new ProgressDialog(this);
         dialog.setMessage(getString(R.string.waiting));
-        swipeFav = (SwipeRefreshLayout)findViewById(R.id.swipeFav);
+
+        textFav = (TextView)findViewById(R.id.textFav);
+        textFav.setVisibility(View.INVISIBLE);
+
 
         user_id = getIntent().getStringExtra("user_id");
         FavServer favServer = new FavServer();
@@ -68,14 +71,7 @@ public class FavorisActivity extends AppCompatActivity {
             }
         });
 
-        swipeFav.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                FavServer favServer = new FavServer();
-                favServer.execute("http://192.168.56.1:8080/api/users/"+user_id);
-                swipeFav.setRefreshing(false);
-            }
-        });
+
 
     }
 
@@ -83,6 +79,13 @@ public class FavorisActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        FavServer favServer = new FavServer();
+        favServer.execute("http://192.168.56.1:8080/api/users/"+user_id);
     }
 
     protected class FavServer extends AsyncTask<String,Void,String>{
@@ -106,6 +109,7 @@ public class FavorisActivity extends AppCompatActivity {
             }
         }
 
+
         @Override
         protected void onPostExecute(String s) {
             //dialog.dismiss();
@@ -125,6 +129,10 @@ public class FavorisActivity extends AppCompatActivity {
                     Offer offer = new Offer(element.getLong("id"),element.getString("title"),element.getString("place"),element.getString("contract"),element.getString("dateCreate"),element.getString("company"));
                     listOffers.add(offer);
                 }
+                if(listOffers.isEmpty()){
+                    textFav.setVisibility(View.VISIBLE);
+                }
+
                 CustomAdaptderFav customAdaptder = new CustomAdaptderFav();
                 listView.setAdapter(customAdaptder);
 

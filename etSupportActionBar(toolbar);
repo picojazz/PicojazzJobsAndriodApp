@@ -1,0 +1,125 @@
+[33mcommit cba90f4bb8277081b279d9d1a343126fe082faac[m
+Author: picojazz <picojazzz@gmail.com>
+Date:   Wed Jan 10 16:58:15 2018 +0000
+
+    change listview in moncv to linearlayout with dynamic content
+
+[33mcommit e13b817af1cefd6c58ea84ec2f9dbe3bd4ef2c66[m
+Author: picojazz <picojazzz@gmail.com>
+Date:   Tue Jan 9 17:35:24 2018 +0000
+
+    design Modifcv
+
+[33mcommit 210b9101137066b37538e3f1a806cd6d6d65476e[m
+Author: picojazz <picojazzz@gmail.com>
+Date:   Mon Jan 8 20:06:16 2018 +0000
+
+    add Moncv
+
+[33mcommit 7cc8dc1d5c1a2fa5327986edc7e1af351e721caa[m
+Author: picojazz <picojazzz@gmail.com>
+Date:   Sun Jan 7 21:20:23 2018 +0000
+
+     add pull-to-refresh
+
+[33mcommit e3ee6927978fe53ebccf78e8733113ed4c72d5a1[m
+Author: picojazz <picojazzz@gmail.com>
+Date:   Fri Jan 5 17:18:16 2018 +0000
+
+    add favoris activity"
+
+[33mcommit b0617ea97e3c7b6a319886f48576a310629ed032[m
+Author: picojazz <picojazzz@gmail.com>
+Date:   Thu Jan 4 20:01:25 2018 +0000
+
+    add favaris
+
+[33mcommit c8b8dc45ece561b98f48b5465b12efe206ea67c6[m
+Author: picojazz <picojazzz@gmail.com>
+Date:   Sat Dec 30 21:38:21 2017 +0000
+
+     athentification ready
+
+[33mcommit c5b03aebaa2ded6752ce59bb761b64e2f4cb31b0[m
+Author: picojazz <picojazzz@gmail.com>
+Date:   Thu Dec 28 16:42:18 2017 +0000
+
+     passing data activity to fragment
+
+[33mcommit de88eeba24fd38a76b17189a693708e2823a85be[m
+Author: picojazz <picojazzz@gmail.com>
+Date:   Thu Dec 28 13:24:38 2017 +0000
+
+    add maps in offer details
+
+[33mcommit 532511ae71e80c373b71363d0a97eab8403d1d4a[m
+Author: picojazz <picojazzz@gmail.com>
+Date:   Wed Dec 27 14:53:31 2017 +0000
+
+    finish offer details
+
+[33mcommit ed93ed969b241ef6aa696ed6b8b0dfe6c6676840[m
+Author: picojazz <picojazzz@gmail.com>
+Date:   Tue Dec 26 14:50:14 2017 +0000
+
+    design offer layout
+
+[33mcommit bd8242fb4d6d560eec6876f5b62a99814df5f534[m
+Author: picojazz <picojazzz@gmail.com>
+Date:   Fri Dec 22 18:33:58 2017 +0000
+
+    implement search query
+
+[33mcommit 15e60c59b3ac3df7d4032a8351262de0d68cbe1b[m
+Author: picojazz <picojazzz@gmail.com>
+Date:   Fri Dec 22 17:13:57 2017 +0000
+
+    add search
+
+[33mcommit fff93ca5aa34c5d86cb4091b83d05819bfcfcf54[m
+Author: picojazz <picojazzz@gmail.com>
+Date:   Fri Dec 22 14:51:12 2017 +0000
+
+    add cardview  for my listview
+
+[33mcommit bf7e412102aa3db20d6bc3fda9308831fba387ea[m
+Author: picojazz <picojazzz@gmail.com>
+Date:   Sat Dec 16 16:28:30 2017 +0000
+
+    add listview of offer
+
+[33mcommit d4aff7eb9294b15fe8772948676da6540496c499[m
+Author: picojazz <picojazzz@gmail.com>
+Date:   Mon Dec 11 17:19:51 2017 +0000
+
+    add navigation drawer
+
+[33mcommit 9b532fa27c1e6f0bf8832d4de81793bcb8832054[m
+Author: picojazz <picojazzz@gmail.com>
+Date:   Thu Dec 7 17:00:27 2017 +0000
+
+    design register page
+
+[33mcommit 2233e5a0e14f44fa47c81d1afdd3e390b0f8b26f[m
+Author: picojazz <picojazzz@gmail.com>
+Date:   Tue Dec 5 19:10:57 2017 +0000
+
+    finnish connection activity design
+
+[33mcommit 603d1261556141a5387cca95df9e5f27b48d5ac9[m
+Author: picojazz <picojazzz@gmail.com>
+Date:   Tue Dec 5 16:57:29 2017 +0000
+
+     fix scroll view
+
+[33mcommit b595152e4b81eabc8fad7929f53b8fab76b00032[m
+Author: picojazz <picojazzz@gmail.com>
+Date:   Tue Dec 5 16:28:27 2017 +0000
+
+    design connexion activity without button
+
+[33mcommit bd9dc631694bb3ec5d35eac34b86bb8ad456bd20[m
+Author: picojazz <picojazzz@gmail.com>
+Date:   Tue Dec 5 14:48:03 2017 +0000
+
+    first commit

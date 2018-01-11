@@ -154,6 +154,13 @@ public class HomeActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        OfferServer offerServer = new OfferServer();
+        offerServer.execute("http://192.168.56.1:8080/api/offers");
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long

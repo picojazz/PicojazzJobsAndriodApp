@@ -18,18 +18,26 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ModifcvActivity extends AppCompatActivity {
     LinearLayout linearLayoutP ;
     LinearLayout linearLayoutP2 ;
-    String user_cv;
+    String user_cv,mFirstName,mLastName,mAdress,mTel,mAge,mEmail;
     EditText lastName,firstName,email,adress,tel,age;
     ProgressDialog dialog;
 
@@ -91,9 +99,24 @@ public class ModifcvActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        if (id == R.id.menuModifcvValider){
+             mFirstName = firstName.getText().toString();
+             mLastName = lastName.getText().toString();
+             mAdress = adress.getText().toString();
+             mAge = age.getText().toString();
+             mTel = tel.getText().toString();
+             mEmail = email.getText().toString();
+
+            UpdateCvServer updateCvServer = new UpdateCvServer();
+            updateCvServer.execute("http://192.168.56.1:8080/api/cv/"+user_cv);
+
+
+            finish();
+        }
 
         return super.onOptionsItemSelected(item);
     }
+
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -199,12 +222,48 @@ public class ModifcvActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            return null;
+
+            try{
+
+
+                HttpClient client = new DefaultHttpClient();
+                HttpPost post = new HttpPost(params[0]);
+                List<NameValuePair> form = new ArrayList<>();
+                form.add(new BasicNameValuePair("firstName",mFirstName));
+                form.add(new BasicNameValuePair("lastName",mLastName));
+                form.add(new BasicNameValuePair("adress",mAdress));
+                form.add(new BasicNameValuePair("age",mAge));
+                form.add(new BasicNameValuePair("email",mEmail));
+                form.add(new BasicNameValuePair("tel",mTel));
+                post.setEntity(new UrlEncodedFormEntity(form, HTTP.UTF_8));
+                ResponseHandler<String> buffer = new BasicResponseHandler();
+                String result = client.execute(post,buffer);
+                return result;
+            }catch(Exception e){
+                e.printStackTrace();
+                return null;
+            }
+
         }
 
         @Override
         protected void onPostExecute(String s) {
-            dialog.dismiss();
+
+            if (s == null) {
+                Toast.makeText(ModifcvActivity.this, "erreur de connexion", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            try{
+                JSONObject jsonObject = new JSONObject(s);
+                if(jsonObject.getString("status").equals("ok")){
+                    Toast.makeText(ModifcvActivity.this, "Cv modifié", Toast.LENGTH_SHORT).show();
+                }
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
         }
     }
 }

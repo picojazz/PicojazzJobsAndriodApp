@@ -15,19 +15,25 @@
          />
 
 
-<android.support.v4.widget.SwipeRefreshLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginTop="60dp"
-    android:id="@+id/swipeFav">
+    <TextView
+        android:id="@+id/textFav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="95dp"
+        android:text="Aucun Favoris"
+
+        android:textAlignment="center"
+        android:textSize="16sp" />
 
             <ListView
                 android:id="@+id/listview_fav"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="60dp"
-                android:divider="@null"/>
+                android:divider="@null"
+                />
 
-</android.support.v4.widget.SwipeRefreshLayout>
+
+
 
 </RelativeLayout>

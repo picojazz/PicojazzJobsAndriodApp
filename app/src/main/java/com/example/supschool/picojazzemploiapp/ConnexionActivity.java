@@ -58,6 +58,13 @@ public class ConnexionActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
+    }
+
     protected class LoginServer extends AsyncTask<String,Void,String>{
         @Override
         protected void onPreExecute() {

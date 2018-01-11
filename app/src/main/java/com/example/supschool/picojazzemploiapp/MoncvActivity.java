@@ -44,6 +44,7 @@ public class MoncvActivity extends AppCompatActivity {
     List<Experiences> listExperiences;
     TextView name,email,adress,tel,age;
     LinearLayout linearLayoutExp,linearLayoutFormation;
+    boolean testEffacer = true;
 
 
 
@@ -84,8 +85,29 @@ public class MoncvActivity extends AppCompatActivity {
         MoncvServer moncvServer = new MoncvServer();
         moncvServer.execute("http://192.168.56.1:8080/api/cv/"+user_cv);
 
+        Log.i("debug","enter in onCreate ....");
+
+        testEffacer = false;
+
+    }
 
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(testEffacer) {
+            if (linearLayoutExp.getChildCount() > 0)
+                linearLayoutExp.removeAllViews();
+
+            if (linearLayoutFormation.getChildCount() > 0)
+                linearLayoutFormation.removeAllViews();
+
+            MoncvServer moncvServer = new MoncvServer();
+            moncvServer.execute("http://192.168.56.1:8080/api/cv/" + user_cv);
+        }
+        Log.i("debug","enter in onResume ....");
+        testEffacer = true;
 
     }
 
@@ -117,7 +139,7 @@ public class MoncvActivity extends AppCompatActivity {
     protected class MoncvServer extends AsyncTask<String,Void,String> {
         @Override
         protected void onPreExecute() {
-            dialog.show();
+            //dialog.show();
         }
 
         @Override
@@ -137,7 +159,7 @@ public class MoncvActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s) {
-            dialog.dismiss();
+            //dialog.dismiss();
             if (s == null) {
                 Toast.makeText(MoncvActivity.this, "erreur de connexion", Toast.LENGTH_SHORT).show();
                 return;
@@ -213,6 +235,7 @@ public class MoncvActivity extends AppCompatActivity {
                     linearLayoutFormation.addView(view,linearLayoutFormation.getChildCount());
 
                 }
+
 
 
 
