@@ -52,8 +52,8 @@ public class ConnexionActivity extends AppCompatActivity {
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ConnexionActivity.this,HomeActivity.class);
-                intent.putExtra("id", "3");
+                Intent intent = new Intent(ConnexionActivity.this,RegisterActivity.class);
+
                 startActivity(intent);
             }
         });

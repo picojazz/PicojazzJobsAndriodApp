@@ -52,7 +52,7 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="38dp"
                 android:text="@string/picojazz"
                 android:textAllCaps="true"
                 android:textColor="@android:color/background_light"
@@ -89,7 +89,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-            <AutoCompleteTextView
+            <EditText
                 android:id="@+id/txtUsernameR"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -107,7 +107,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-            <AutoCompleteTextView
+            <EditText
                 android:id="@+id/txtPasswordR"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -120,13 +120,14 @@
                 android:drawableLeft="@drawable/password"
                 android:drawablePadding="10dp"
                 android:hint="@string/mot_de_passe"
+                android:inputType="textPassword"
                 android:paddingStart="10dp"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtUsernameR" />
 
-            <AutoCompleteTextView
+            <EditText
                 android:id="@+id/txtEmailR"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
