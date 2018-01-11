@@ -22,6 +22,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
@@ -33,6 +34,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.*;
 
 public class ModifcvActivity extends AppCompatActivity {
     LinearLayout linearLayoutP ;
@@ -40,6 +42,10 @@ public class ModifcvActivity extends AppCompatActivity {
     String user_cv,mFirstName,mLastName,mAdress,mTel,mAge,mEmail;
     EditText lastName,firstName,email,adress,tel,age;
     ProgressDialog dialog;
+    List<String> expAsupp,formationAsupp;
+    String midExp,mbegin,mend,mposition,mcompany,mabout;
+    String midFormation,mdate,mname,mschool;
+    int a = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +60,9 @@ public class ModifcvActivity extends AppCompatActivity {
         dialog.setMessage(getString(R.string.waiting));
 
         user_cv = getIntent().getStringExtra("user_cv");
+
+        expAsupp = new ArrayList<>();
+        formationAsupp = new ArrayList<>();
 
         linearLayoutP = (LinearLayout) findViewById(R.id.linearLayoutModifcv);
         linearLayoutP2 = (LinearLayout) findViewById(R.id.linearLayoutModifcv2);
@@ -74,18 +83,34 @@ public class ModifcvActivity extends AppCompatActivity {
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View rowView = inflater.inflate(R.layout.row_modif_experience, null);
         linearLayoutP.addView(rowView, linearLayoutP.getChildCount() );
+        TextView idExp = (TextView) rowView.findViewById(R.id.idExp);
+        idExp.setText("-1");
         Log.i("debug","1111");
     }
     public void onAddRow2(View v) {
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View rowView = inflater.inflate(R.layout.row_modif_formation, null);
+        TextView idFormation = (TextView) rowView.findViewById(R.id.idFormation);
+        idFormation.setText("-1");
         linearLayoutP2.addView(rowView, linearLayoutP2.getChildCount() );
         Log.i("debug","1111");
     }
     public void onDelete(View v) {
+        View view = (View) v.getParent();
+        TextView idExp = (TextView)view.findViewById(R.id.idExp);
+        if(!idExp.getText().toString().equals("-1") ){
+            expAsupp.add(idExp.getText().toString());
+            Log.i("debug","idExp a supp => "+idExp.getText().toString());
+        }
         linearLayoutP.removeView((View) v.getParent());
     }
     public void onDelete2(View v) {
+        View view = (View) v.getParent();
+        TextView idFormation = (TextView)view.findViewById(R.id.idFormation);
+        if(!idFormation.getText().toString().equals("-1") ){
+            formationAsupp.add(idFormation.getText().toString());
+            Log.i("debug","idFormation a supp => "+idFormation.getText().toString());
+        }
         linearLayoutP2.removeView((View) v.getParent());
     }
 
@@ -100,6 +125,7 @@ public class ModifcvActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.menuModifcvValider){
+
              mFirstName = firstName.getText().toString();
              mLastName = lastName.getText().toString();
              mAdress = adress.getText().toString();
@@ -110,8 +136,78 @@ public class ModifcvActivity extends AppCompatActivity {
             UpdateCvServer updateCvServer = new UpdateCvServer();
             updateCvServer.execute("http://192.168.56.1:8080/api/cv/"+user_cv);
 
+            for (int i = 0 ; i < linearLayoutP.getChildCount() ; i++ ){
+                View rowView = linearLayoutP.getChildAt(i);
+                EditText debut = (EditText)rowView.findViewById(R.id.txtDebut);
+                EditText fin = (EditText)rowView.findViewById(R.id.txtFin);
+                EditText position = (EditText)rowView.findViewById(R.id.txtPoste);
+                EditText societe = (EditText)rowView.findViewById(R.id.txtSociete);
+                EditText about = (EditText)rowView.findViewById(R.id.txtAbout);
+                TextView idExp = (TextView) rowView.findViewById(R.id.idExp);
+
+                midExp = idExp.getText().toString();
+                mbegin = debut.getText().toString();
+                mend = fin.getText().toString();
+                mposition = position.getText().toString();
+                mcompany = societe.getText().toString();
+                mabout = about.getText().toString();
+                Log.i("debug",midExp+" "+mbegin+" "+mend+" "+mposition+" "+mcompany+" "+mabout);
+
+
+
+
+                try {
+                    UpdateOrAddExp updateOrAddExp = new UpdateOrAddExp();
+                    updateOrAddExp.execute("http://192.168.56.1:8080/api/experiences");
+                    Thread.sleep(100);
+
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+            for (int i = 0 ; i < linearLayoutP2.getChildCount() ; i++ ){
+                View rowView = linearLayoutP2.getChildAt(i);
+
+                EditText date = (EditText)rowView.findViewById(R.id.txtDate);
+                EditText diplome = (EditText)rowView.findViewById(R.id.txtDiplome);
+                EditText ecole = (EditText)rowView.findViewById(R.id.txtEcole);
+                TextView idFormation = (TextView) rowView.findViewById(R.id.idFormation);
+
+                midFormation = idFormation.getText().toString();
+                mdate = date.getText().toString();
+                mschool = ecole.getText().toString();
+                mname = diplome.getText().toString();
+
+
+
+                try {
+                    UpdateOrAddFormation updateOrAddFormation = new UpdateOrAddFormation();
+                    updateOrAddFormation.execute("http://192.168.56.1:8080/api/formations");
+                    Thread.sleep(100);
+
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            for (int i = 0 ; i < expAsupp.size() ; i++ ){
+                DeleteExp deleteExp = new DeleteExp();
+                deleteExp.execute("http://192.168.56.1:8080/api/experiences/"+expAsupp.get(i));
+            }
+            for (int i = 0 ; i < formationAsupp.size() ; i++ ){
+                DeleteFormation deleteFormation = new DeleteFormation();
+                deleteFormation.execute("http://192.168.56.1:8080/api/formations/"+formationAsupp.get(i));
+            }
+
 
             finish();
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -181,11 +277,23 @@ public class ModifcvActivity extends AppCompatActivity {
                     EditText position = (EditText)rowView.findViewById(R.id.txtPoste);
                     EditText societe = (EditText)rowView.findViewById(R.id.txtSociete);
                     EditText about = (EditText)rowView.findViewById(R.id.txtAbout);
-                    debut.setText(element.getString("begin"));
-                    fin.setText(element.getString("end"));
-                    position.setText(element.getString("position"));
-                    societe.setText(element.getString("company"));
-                    about.setText(element.getString("about"));
+                    TextView idExp = (TextView) rowView.findViewById(R.id.idExp);
+                    idExp.setText(String.valueOf(element.getLong("id")));
+                    if(element.getString("begin") != "null") {
+                        debut.setText(element.getString("begin"));
+                    }
+                    if(element.getString("end") != "null") {
+                        fin.setText(element.getString("end"));
+                    }
+                    if(element.getString("position") != "null") {
+                        position.setText(element.getString("position"));
+                    }
+                    if(element.getString("company") != "null") {
+                        societe.setText(element.getString("company"));
+                    }
+                    if (element.getString("about") != "null") {
+                        about.setText(element.getString("about"));
+                    }
 
                     linearLayoutP.addView(rowView, linearLayoutP.getChildCount() );
 
@@ -199,10 +307,18 @@ public class ModifcvActivity extends AppCompatActivity {
                     EditText date = (EditText)rowView.findViewById(R.id.txtDate);
                     EditText diplome = (EditText)rowView.findViewById(R.id.txtDiplome);
                     EditText ecole = (EditText)rowView.findViewById(R.id.txtEcole);
+                    TextView idFormation = (TextView) rowView.findViewById(R.id.idFormation);
 
-                    date.setText(element.getString("date"));
-                    diplome.setText(element.getString("name"));
-                    ecole.setText(element.getString("school"));
+                    idFormation.setText(String.valueOf(element.getLong("id")));
+                    if (element.getString("date") != "null") {
+                        date.setText(element.getString("date"));
+                    }
+                    if(element.getString("name") != "null") {
+                        diplome.setText(element.getString("name"));
+                    }
+                    if(element.getString("school") != "null") {
+                        ecole.setText(element.getString("school"));
+                    }
 
                     linearLayoutP2.addView(rowView, linearLayoutP2.getChildCount() );
                 }
@@ -238,6 +354,7 @@ public class ModifcvActivity extends AppCompatActivity {
                 post.setEntity(new UrlEncodedFormEntity(form, HTTP.UTF_8));
                 ResponseHandler<String> buffer = new BasicResponseHandler();
                 String result = client.execute(post,buffer);
+
                 return result;
             }catch(Exception e){
                 e.printStackTrace();
@@ -266,4 +383,129 @@ public class ModifcvActivity extends AppCompatActivity {
 
         }
     }
+
+    protected class UpdateOrAddExp extends AsyncTask<String,Void,String>{
+        @Override
+        protected String doInBackground(String... params) {
+            try{
+                HttpClient client = new DefaultHttpClient();
+                HttpPost post = new HttpPost(params[0]);
+                List<NameValuePair> form = new ArrayList<>();
+                form.add(new BasicNameValuePair("idCV",user_cv));
+                form.add(new BasicNameValuePair("id",midExp));
+                form.add(new BasicNameValuePair("begin",mbegin));
+                form.add(new BasicNameValuePair("end",mend));
+                form.add(new BasicNameValuePair("position",mposition));
+                form.add(new BasicNameValuePair("company",mcompany));
+                form.add(new BasicNameValuePair("about",mabout));
+                post.setEntity(new UrlEncodedFormEntity(form,HTTP.UTF_8));
+                ResponseHandler<String> buffer = new BasicResponseHandler();
+                String result = client.execute(post,buffer);
+                a++;
+                Log.i("debug","a ==> "+a);
+                return result;
+
+            }catch(Exception e){
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if (s == null) {
+                Toast.makeText(ModifcvActivity.this, "erreur de connexion", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Log.i("debug","in modif or add exp");
+
+
+        }
+    }
+
+    protected class UpdateOrAddFormation extends AsyncTask<String,Void,String>{
+        @Override
+        protected String doInBackground(String... params) {
+            try{
+                HttpClient client = new DefaultHttpClient();
+                HttpPost post = new HttpPost(params[0]);
+                List<NameValuePair> form = new ArrayList<>();
+                form.add(new BasicNameValuePair("idCV",user_cv));
+                form.add(new BasicNameValuePair("id",midFormation));
+                form.add(new BasicNameValuePair("date",mdate));
+                form.add(new BasicNameValuePair("name",mname));
+                form.add(new BasicNameValuePair("school",mschool));
+                post.setEntity(new UrlEncodedFormEntity(form,HTTP.UTF_8));
+                ResponseHandler<String> buffer = new BasicResponseHandler();
+                String result = client.execute(post,buffer);
+                return result;
+
+            }catch(Exception e){
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if (s == null) {
+                Toast.makeText(ModifcvActivity.this, "erreur de connexion", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Log.i("debug","in modif or add formation");
+        }
+    }
+
+    protected class DeleteExp extends AsyncTask<String,Void,String>{
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                HttpClient client = new DefaultHttpClient();
+                HttpDelete delete = new HttpDelete(params[0]);
+                ResponseHandler<String> buffer = new BasicResponseHandler();
+                String result = client.execute(delete, buffer);
+                return result;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if (s == null) {
+                Toast.makeText(ModifcvActivity.this, "erreur de connexion", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Log.i("debug","in delete exp");
+        }
+    }
+
+    protected class DeleteFormation extends AsyncTask<String,Void,String>{
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                HttpClient client = new DefaultHttpClient();
+                HttpDelete delete = new HttpDelete(params[0]);
+                ResponseHandler<String> buffer = new BasicResponseHandler();
+                String result = client.execute(delete, buffer);
+                return result;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if (s == null) {
+                Toast.makeText(ModifcvActivity.this, "erreur de connexion", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Log.i("debug","in delete formation");
+        }
+    }
+
 }

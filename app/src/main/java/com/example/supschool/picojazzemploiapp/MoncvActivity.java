@@ -50,6 +50,7 @@ public class MoncvActivity extends AppCompatActivity {
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +67,8 @@ public class MoncvActivity extends AppCompatActivity {
 
         user_cv = getIntent().getStringExtra("user_cv");
         Log.i("debug "," user cv => "+user_cv);
+
+
 
 
         listFormations = new ArrayList<>();
@@ -206,11 +209,21 @@ public class MoncvActivity extends AppCompatActivity {
                     TextView expCompany = (TextView)view.findViewById(R.id.expCompany);
                     TextView expAbout = (TextView)view.findViewById(R.id.expAbout);
 
-                    dateDebut.setText(element.getString("begin"));
-                    dateFin.setText(element.getString("end"));
-                    expPosition.setText(element.getString("position"));
-                    expCompany.setText(element.getString("company"));
-                    expAbout.setText(element.getString("about"));
+                    if(element.getString("begin") != "null") {
+                        dateDebut.setText(element.getString("begin"));
+                    }
+                    if(element.getString("end") != "null") {
+                        dateFin.setText(element.getString("end"));
+                    }
+                    if(element.getString("position") != "null") {
+                        expPosition.setText(element.getString("position"));
+                    }
+                    if(element.getString("company") != "null") {
+                        expCompany.setText(element.getString("company"));
+                    }
+                    if (element.getString("about") != "null") {
+                        expAbout.setText(element.getString("about"));
+                    }
 
                     linearLayoutExp.addView(view,linearLayoutExp.getChildCount());
 
@@ -228,9 +241,15 @@ public class MoncvActivity extends AppCompatActivity {
                     TextView name = (TextView)view.findViewById(R.id.nameFormation);
                     TextView school = (TextView)view.findViewById(R.id.schoolformation);
 
-                    date.setText(element.getString("date"));
-                    name.setText(element.getString("name"));
-                    school.setText(element.getString("school"));
+                    if (element.getString("date") != "null") {
+                        date.setText(element.getString("date"));
+                    }
+                    if(element.getString("name") != "null") {
+                        name.setText(element.getString("name"));
+                    }
+                    if(element.getString("school") != "null") {
+                        school.setText(element.getString("school"));
+                    }
 
                     linearLayoutFormation.addView(view,linearLayoutFormation.getChildCount());
 

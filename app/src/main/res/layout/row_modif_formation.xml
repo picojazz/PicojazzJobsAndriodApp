@@ -53,7 +53,7 @@
         android:layout_alignEnd="@+id/txtDiplome" />
     <Button
         android:id="@+id/button"
-        android:layout_width="50dp"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
 
         android:background="@drawable/ic_cancel_black_24dp"
@@ -64,5 +64,13 @@
         android:layout_marginLeft="18dp"
         android:layout_marginStart="18dp"
         android:onClick="onDelete2"/>
+
+    <TextView
+        android:id="@+id/idFormation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:visibility="invisible"
+        />
 
 </RelativeLayout>
