@@ -146,7 +146,7 @@ public class OfferActivity extends AppCompatActivity {
                 JSONObject json = new JSONObject(s);
                 title.setText(json.getString("title"));
                 contract.setText(json.getString("contract"));
-                salary.setText(json.getString("salary")+" / year");
+                salary.setText(json.getString("salary")+" / an");
                 location.setText(json.getString("place"));
                 about.setText(json.getString("about"));
                 company.setText(json.getString("company"));

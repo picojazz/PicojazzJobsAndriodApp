@@ -38,7 +38,8 @@
 
         <activity android:name=".FavorisActivity" />
         <activity android:name=".MoncvActivity" />
-        <activity android:name=".ModifcvActivity"></activity>
+        <activity android:name=".ModifcvActivity" />
+        <activity android:name=".DescActivity"></activity>
     </application>
 
 </manifest>

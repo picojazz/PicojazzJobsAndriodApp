@@ -104,7 +104,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="110dp"
                 android:layout_marginTop="140dp"
-                android:text="30k / year"
+                android:text="30k / an"
                 android:textSize="16sp"
                 android:textColor="#2c3e50"/>
             <TextView
@@ -142,7 +142,7 @@
                 android:layout_height="wrap_content"
 
                 android:layout_marginTop="15dp"
-                android:text="About"
+                android:text="Description du poste"
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textColor="@color/colorPrimary"
